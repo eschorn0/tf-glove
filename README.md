@@ -31,10 +31,12 @@ git clone https://github.com/attardi/wikiextractor.git ../wikiextractor
 `tf-glove` extracts the Wikipedia article dump, builds a vocabulary, tokenizes
 both the corpus and test set, and creates the co-occurence matrix for training.
 The code may encounter pinch-points with less than 32GB of physical memory. The
-Makefile only runs what is necessary to train.
+Makefile only runs what is necessary to train. Have a look at the `make.log` file
+to learn what to expect - at the end we see 63% top-1 accurracy for 100-D vectors.
 ~~~~
 # Run! Sit back and relax...
 make train
+
 ~~~~
 
 
