@@ -1,0 +1,412 @@
+python setup.py build_ext --inplace  # IGNORE NUMPY WARNINGS
+Compiling buildHashMatrix.pyx because it changed.
+[1/1] Cythonizing buildHashMatrix.pyx
+running build_ext
+building 'buildHashMatrix' extension
+creating build
+creating build/temp.linux-x86_64-2.7
+gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/eric/anaconda2/envs/first/include/python2.7 -c buildHashMatrix.c -o build/temp.linux-x86_64-2.7/buildHashMatrix.o
+gcc -pthread -shared -L/home/eric/anaconda2/envs/first/lib -Wl,-rpath=/home/eric/anaconda2/envs/first/lib,--no-as-needed build/temp.linux-x86_64-2.7/buildHashMatrix.o -L/home/eric/anaconda2/envs/first/lib -lpython2.7 -o /home/eric/work/python/tf-glove/buildHashMatrix.so
+python ../wikiextractor/WikiExtractor.py -b 150M -c -o /tmp /tmp/enwiki-latest-pages-articles.xml.bz2 
+./1-buildVocab.py
+# 1-buildVocab.py at Mon Mar 20 2017 20:09
+# Configuration parameters: corpDir=/tmp/AA, numCPU=4, numFiles=-1, vocabSize=-1
+
+4494568 unique words
+15803 unique and ignored artifacts (baddies)
+
+Finished processing 76 files in 5393 seconds
+
+
+./2-tokenizeCorpus.py
+# 2-tokenizeCorpus.py at Mon Mar 20 2017 21:39
+# Configuration parameters: corpDir=/tmp/AA, numCPU=4, numFiles=-1
+
+Shape of tokenized corpus: (1878435126,)
+
+Finished 76 files in 5249 seconds
+./4-createCoMatrix.py
+# 4-createCoMatrix.py at Mon Mar 20 2017 23:07
+#Configuration parameters: adjacent=10, hashSize=30.0, maxColl=1000, prop=1.0
+
+Hash arrays size: 1073741824
+Total number of tokens to process 1878435126
+23:11:14  Finished  4% at 345370 ips with 0 total abandoned stores
+23:14:41  Finished  8% at 353901 ips with 0 total abandoned stores
+23:18:19  Finished 12% at 351156 ips with 0 total abandoned stores
+23:21:52  Finished 16% at 351326 ips with 0 total abandoned stores
+23:25:26  Finished 20% at 351278 ips with 0 total abandoned stores
+23:29:01  Finished 24% at 351084 ips with 0 total abandoned stores
+23:32:40  Finished 28% at 349819 ips with 0 total abandoned stores
+23:36:20  Finished 32% at 348782 ips with 0 total abandoned stores
+23:40:03  Finished 36% at 347476 ips with 0 total abandoned stores
+23:43:44  Finished 40% at 346609 ips with 0 total abandoned stores
+23:47:24  Finished 44% at 346150 ips with 0 total abandoned stores
+23:51:04  Finished 48% at 345819 ips with 0 total abandoned stores
+23:54:42  Finished 52% at 345705 ips with 0 total abandoned stores
+23:58:24  Finished 56% at 345197 ips with 0 total abandoned stores
+00:02:06  Finished 60% at 344732 ips with 0 total abandoned stores
+00:05:45  Finished 64% at 344684 ips with 0 total abandoned stores
+00:09:22  Finished 68% at 344725 ips with 0 total abandoned stores
+00:13:01  Finished 72% at 344678 ips with 0 total abandoned stores
+00:16:39  Finished 76% at 344606 ips with 0 total abandoned stores
+00:20:19  Finished 80% at 344482 ips with 0 total abandoned stores
+00:23:59  Finished 84% at 344344 ips with 0 total abandoned stores
+00:27:40  Finished 88% at 344150 ips with 0 total abandoned stores
+00:31:21  Finished 92% at 343957 ips with 0 total abandoned stores
+00:35:03  Finished 96% at 343712 ips with 0 total abandoned stores
+Percentage of abandoned stores 0.0%
+Finished in 5597 seconds with 0 abandoned stores
+Hash table density 0.696336562745
+Co-occurrence matrix entries: (2, 747685691)
+cmCt sum 10591279104.0
+./3-tokenizeTestSet.py
+# 3-tokenizeTestSet.py at Tue Mar 21 2017 00:41
+
+19559 lines in original test set text
+ less 15 lines that are headers or had more than four words
+19544 acceptable 4 word lines
+19544 lines had everything required in the wordDictionary
+19544 items in testSet with word index < 50k
+
+./5-glove.py
+# 5-glove.py at Tue Mar 21 2017 00:41
+# Configuration parameters: tf version=1.0.0, np version=1.12.0, batchSize=256, cmd=train,
+# | countMax=100, countMin=0.11, embedSize=100, epochs=30, initRange=0.025, learnRate=0.032,
+# | logDir=/tmp/glove-KFHI, scalingF=0.75, topWords=10, vocabSize=400000
+
+Original data length 747,685,691
+After removing UNK, -stop- and 10 top words, data length now 716,956,764
+After removing counts less than 0.11, data length now 716,956,764
+With limited vocab size of 400000, data length is now 556,013,039
+Working dataset length is 556,012,800 split into 2,171,925 equal batches of 256
+00:45:41 Epoch=000.10  GS=2.17e+05  LR=3.20e-02  Loss=25.644  Speed=4.33e+05s/sec
+00:47:50 Epoch=000.20  GS=4.34e+05  LR=3.20e-02  Loss=21.989  Speed=4.33e+05s/sec
+00:49:58 Epoch=000.30  GS=6.52e+05  LR=3.20e-02  Loss=19.912  Speed=4.33e+05s/sec
+00:52:06 Epoch=000.40  GS=8.69e+05  LR=3.20e-02  Loss=18.538  Speed=4.33e+05s/sec
+00:54:14 Epoch=000.50  GS=1.09e+06  LR=3.20e-02  Loss=17.724  Speed=4.33e+05s/sec
+00:56:22 Epoch=000.60  GS=1.30e+06  LR=3.20e-02  Loss=17.187  Speed=4.33e+05s/sec
+00:58:30 Epoch=000.70  GS=1.52e+06  LR=3.20e-02  Loss=16.648  Speed=4.34e+05s/sec
+01:00:38 Epoch=000.80  GS=1.74e+06  LR=3.20e-02  Loss=16.169  Speed=4.34e+05s/sec
+01:02:46 Epoch=000.90  GS=1.95e+06  LR=3.20e-02  Loss=15.935  Speed=4.34e+05s/sec
+01:04:54 Epoch=001.00  GS=2.17e+06  LR=3.20e-02  Loss=15.744  Speed=4.34e+05s/sec
+Word Analogies -- Top 1: 30.2%    Top 1+2: 38.6%
+01:07:17 Epoch=001.10  GS=2.39e+06  LR=3.20e-02  Loss=15.359  Speed=4.29e+05s/sec
+01:09:25 Epoch=001.20  GS=2.61e+06  LR=3.20e-02  Loss=15.035  Speed=4.30e+05s/sec
+01:11:33 Epoch=001.30  GS=2.82e+06  LR=3.20e-02  Loss=14.764  Speed=4.30e+05s/sec
+01:13:41 Epoch=001.40  GS=3.04e+06  LR=3.20e-02  Loss=14.412  Speed=4.31e+05s/sec
+01:15:49 Epoch=001.50  GS=3.26e+06  LR=3.20e-02  Loss=14.242  Speed=4.31e+05s/sec
+01:17:57 Epoch=001.60  GS=3.48e+06  LR=3.20e-02  Loss=14.160  Speed=4.31e+05s/sec
+01:20:05 Epoch=001.70  GS=3.69e+06  LR=3.20e-02  Loss=13.992  Speed=4.31e+05s/sec
+01:22:12 Epoch=001.80  GS=3.91e+06  LR=3.20e-02  Loss=13.830  Speed=4.31e+05s/sec
+01:24:20 Epoch=001.90  GS=4.13e+06  LR=3.20e-02  Loss=13.783  Speed=4.32e+05s/sec
+01:26:28 Epoch=002.00  GS=4.34e+06  LR=3.20e-02  Loss=13.745  Speed=4.32e+05s/sec
+Word Analogies -- Top 1: 44.6%    Top 1+2: 54.8%
+01:28:53 Epoch=002.10  GS=4.56e+06  LR=3.20e-02  Loss=13.589  Speed=4.29e+05s/sec
+01:31:01 Epoch=002.20  GS=4.78e+06  LR=3.20e-02  Loss=13.485  Speed=4.29e+05s/sec
+01:33:09 Epoch=002.30  GS=5.00e+06  LR=3.20e-02  Loss=13.414  Speed=4.30e+05s/sec
+01:35:17 Epoch=002.40  GS=5.21e+06  LR=3.20e-02  Loss=13.230  Speed=4.30e+05s/sec
+01:37:25 Epoch=002.50  GS=5.43e+06  LR=3.20e-02  Loss=13.144  Speed=4.30e+05s/sec
+01:39:32 Epoch=002.60  GS=5.65e+06  LR=3.20e-02  Loss=13.153  Speed=4.30e+05s/sec
+01:41:40 Epoch=002.70  GS=5.86e+06  LR=3.20e-02  Loss=13.047  Speed=4.30e+05s/sec
+01:43:48 Epoch=002.80  GS=6.08e+06  LR=3.20e-02  Loss=12.954  Speed=4.31e+05s/sec
+01:45:55 Epoch=002.90  GS=6.30e+06  LR=3.20e-02  Loss=12.932  Speed=4.31e+05s/sec
+01:48:03 Epoch=003.00  GS=6.52e+06  LR=3.20e-02  Loss=12.915  Speed=4.31e+05s/sec
+Word Analogies -- Top 1: 50.4%    Top 1+2: 60.4%
+01:50:28 Epoch=003.10  GS=6.73e+06  LR=3.20e-02  Loss=12.815  Speed=4.29e+05s/sec
+01:52:36 Epoch=003.20  GS=6.95e+06  LR=3.20e-02  Loss=12.771  Speed=4.29e+05s/sec
+01:54:44 Epoch=003.30  GS=7.17e+06  LR=3.20e-02  Loss=12.748  Speed=4.30e+05s/sec
+01:56:52 Epoch=003.40  GS=7.38e+06  LR=3.20e-02  Loss=12.624  Speed=4.30e+05s/sec
+01:58:59 Epoch=003.50  GS=7.60e+06  LR=3.20e-02  Loss=12.558  Speed=4.30e+05s/sec
+02:01:07 Epoch=003.60  GS=7.82e+06  LR=3.20e-02  Loss=12.600  Speed=4.30e+05s/sec
+02:03:15 Epoch=003.70  GS=8.04e+06  LR=3.20e-02  Loss=12.519  Speed=4.30e+05s/sec
+02:05:23 Epoch=003.80  GS=8.25e+06  LR=3.20e-02  Loss=12.454  Speed=4.30e+05s/sec
+02:07:31 Epoch=003.90  GS=8.47e+06  LR=3.20e-02  Loss=12.443  Speed=4.30e+05s/sec
+02:09:39 Epoch=004.00  GS=8.69e+06  LR=3.20e-02  Loss=12.438  Speed=4.31e+05s/sec
+Word Analogies -- Top 1: 52.9%    Top 1+2: 62.9%
+02:12:03 Epoch=004.10  GS=8.90e+06  LR=3.20e-02  Loss=12.361  Speed=4.29e+05s/sec
+02:14:11 Epoch=004.20  GS=9.12e+06  LR=3.20e-02  Loss=12.345  Speed=4.29e+05s/sec
+02:16:19 Epoch=004.30  GS=9.34e+06  LR=3.20e-02  Loss=12.339  Speed=4.30e+05s/sec
+02:18:26 Epoch=004.40  GS=9.56e+06  LR=3.20e-02  Loss=12.246  Speed=4.30e+05s/sec
+02:20:34 Epoch=004.50  GS=9.77e+06  LR=3.20e-02  Loss=12.192  Speed=4.30e+05s/sec
+02:22:42 Epoch=004.60  GS=9.99e+06  LR=3.20e-02  Loss=12.250  Speed=4.30e+05s/sec
+02:24:50 Epoch=004.70  GS=1.02e+07  LR=3.20e-02  Loss=12.183  Speed=4.30e+05s/sec
+02:26:58 Epoch=004.80  GS=1.04e+07  LR=3.20e-02  Loss=12.132  Speed=4.30e+05s/sec
+02:29:05 Epoch=004.90  GS=1.06e+07  LR=3.20e-02  Loss=12.127  Speed=4.30e+05s/sec
+02:31:13 Epoch=005.00  GS=1.09e+07  LR=3.20e-02  Loss=12.129  Speed=4.30e+05s/sec
+Word Analogies -- Top 1: 54.2%    Top 1+2: 64.0%
+02:33:38 Epoch=005.10  GS=1.11e+07  LR=3.20e-02  Loss=12.064  Speed=4.29e+05s/sec
+02:35:46 Epoch=005.20  GS=1.13e+07  LR=3.20e-02  Loss=12.063  Speed=4.29e+05s/sec
+02:37:54 Epoch=005.30  GS=1.15e+07  LR=3.20e-02  Loss=12.067  Speed=4.30e+05s/sec
+02:40:01 Epoch=005.40  GS=1.17e+07  LR=3.20e-02  Loss=11.988  Speed=4.30e+05s/sec
+02:42:09 Epoch=005.50  GS=1.19e+07  LR=3.20e-02  Loss=11.945  Speed=4.30e+05s/sec
+02:44:17 Epoch=005.60  GS=1.22e+07  LR=3.20e-02  Loss=12.012  Speed=4.30e+05s/sec
+02:46:25 Epoch=005.70  GS=1.24e+07  LR=3.20e-02  Loss=11.952  Speed=4.30e+05s/sec
+02:48:33 Epoch=005.80  GS=1.26e+07  LR=3.20e-02  Loss=11.909  Speed=4.30e+05s/sec
+02:50:40 Epoch=005.90  GS=1.28e+07  LR=3.20e-02  Loss=11.909  Speed=4.30e+05s/sec
+02:52:48 Epoch=006.00  GS=1.30e+07  LR=3.20e-02  Loss=11.913  Speed=4.30e+05s/sec
+Word Analogies -- Top 1: 54.9%    Top 1+2: 64.4%
+02:55:13 Epoch=006.10  GS=1.32e+07  LR=3.20e-02  Loss=11.856  Speed=4.29e+05s/sec
+02:57:21 Epoch=006.20  GS=1.35e+07  LR=3.20e-02  Loss=11.863  Speed=4.29e+05s/sec
+02:59:29 Epoch=006.30  GS=1.37e+07  LR=3.20e-02  Loss=11.873  Speed=4.29e+05s/sec
+03:01:36 Epoch=006.40  GS=1.39e+07  LR=3.20e-02  Loss=11.806  Speed=4.30e+05s/sec
+03:03:44 Epoch=006.50  GS=1.41e+07  LR=3.20e-02  Loss=11.768  Speed=4.30e+05s/sec
+03:05:52 Epoch=006.60  GS=1.43e+07  LR=3.20e-02  Loss=11.840  Speed=4.30e+05s/sec
+03:08:00 Epoch=006.70  GS=1.46e+07  LR=3.20e-02  Loss=11.782  Speed=4.30e+05s/sec
+03:10:08 Epoch=006.80  GS=1.48e+07  LR=3.20e-02  Loss=11.745  Speed=4.30e+05s/sec
+03:12:17 Epoch=006.90  GS=1.50e+07  LR=3.20e-02  Loss=11.750  Speed=4.30e+05s/sec
+03:14:24 Epoch=007.00  GS=1.52e+07  LR=3.20e-02  Loss=11.756  Speed=4.30e+05s/sec
+Word Analogies -- Top 1: 55.2%    Top 1+2: 64.7%
+03:16:49 Epoch=007.10  GS=1.54e+07  LR=1.60e-02  Loss=11.091  Speed=4.29e+05s/sec
+03:18:57 Epoch=007.20  GS=1.56e+07  LR=1.60e-02  Loss=10.928  Speed=4.29e+05s/sec
+03:21:04 Epoch=007.30  GS=1.59e+07  LR=1.60e-02  Loss=10.818  Speed=4.29e+05s/sec
+03:23:12 Epoch=007.40  GS=1.61e+07  LR=1.60e-02  Loss=10.667  Speed=4.30e+05s/sec
+03:25:20 Epoch=007.50  GS=1.63e+07  LR=1.60e-02  Loss=10.545  Speed=4.30e+05s/sec
+03:27:28 Epoch=007.60  GS=1.65e+07  LR=1.60e-02  Loss=10.533  Speed=4.30e+05s/sec
+03:29:36 Epoch=007.70  GS=1.67e+07  LR=1.60e-02  Loss=10.391  Speed=4.30e+05s/sec
+03:31:43 Epoch=007.80  GS=1.69e+07  LR=1.60e-02  Loss=10.306  Speed=4.30e+05s/sec
+03:33:51 Epoch=007.90  GS=1.72e+07  LR=1.60e-02  Loss=10.218  Speed=4.30e+05s/sec
+03:35:58 Epoch=008.00  GS=1.74e+07  LR=1.60e-02  Loss=10.149  Speed=4.30e+05s/sec
+Word Analogies -- Top 1: 60.3%    Top 1+2: 69.4%
+03:38:27 Epoch=008.10  GS=1.76e+07  LR=1.60e-02  Loss=10.571  Speed=4.29e+05s/sec
+03:40:34 Epoch=008.20  GS=1.78e+07  LR=1.60e-02  Loss=10.553  Speed=4.29e+05s/sec
+03:42:41 Epoch=008.30  GS=1.80e+07  LR=1.60e-02  Loss=10.529  Speed=4.29e+05s/sec
+03:44:48 Epoch=008.40  GS=1.82e+07  LR=1.60e-02  Loss=10.453  Speed=4.29e+05s/sec
+03:46:55 Epoch=008.50  GS=1.85e+07  LR=1.60e-02  Loss=10.391  Speed=4.30e+05s/sec
+03:49:02 Epoch=008.60  GS=1.87e+07  LR=1.60e-02  Loss=10.427  Speed=4.30e+05s/sec
+03:51:09 Epoch=008.70  GS=1.89e+07  LR=1.60e-02  Loss=10.338  Speed=4.30e+05s/sec
+03:53:16 Epoch=008.80  GS=1.91e+07  LR=1.60e-02  Loss=10.304  Speed=4.30e+05s/sec
+03:55:24 Epoch=008.90  GS=1.93e+07  LR=1.60e-02  Loss=10.268  Speed=4.30e+05s/sec
+03:57:31 Epoch=009.00  GS=1.95e+07  LR=1.60e-02  Loss=10.252  Speed=4.30e+05s/sec
+Word Analogies -- Top 1: 60.6%    Top 1+2: 69.8%
+03:59:59 Epoch=009.10  GS=1.98e+07  LR=1.60e-02  Loss=10.443  Speed=4.29e+05s/sec
+04:02:06 Epoch=009.20  GS=2.00e+07  LR=1.60e-02  Loss=10.441  Speed=4.29e+05s/sec
+04:04:13 Epoch=009.30  GS=2.02e+07  LR=1.60e-02  Loss=10.432  Speed=4.29e+05s/sec
+04:06:20 Epoch=009.40  GS=2.04e+07  LR=1.60e-02  Loss=10.372  Speed=4.30e+05s/sec
+04:08:27 Epoch=009.50  GS=2.06e+07  LR=1.60e-02  Loss=10.326  Speed=4.30e+05s/sec
+04:10:35 Epoch=009.60  GS=2.09e+07  LR=1.60e-02  Loss=10.376  Speed=4.30e+05s/sec
+04:12:42 Epoch=009.70  GS=2.11e+07  LR=1.60e-02  Loss=10.300  Speed=4.30e+05s/sec
+04:14:49 Epoch=009.80  GS=2.13e+07  LR=1.60e-02  Loss=10.281  Speed=4.30e+05s/sec
+04:16:56 Epoch=009.90  GS=2.15e+07  LR=1.60e-02  Loss=10.258  Speed=4.30e+05s/sec
+04:19:03 Epoch=010.00  GS=2.17e+07  LR=1.60e-02  Loss=10.258  Speed=4.30e+05s/sec
+Word Analogies -- Top 1: 60.8%    Top 1+2: 69.9%
+04:21:32 Epoch=010.10  GS=2.19e+07  LR=1.60e-02  Loss=10.368  Speed=4.29e+05s/sec
+04:23:39 Epoch=010.20  GS=2.22e+07  LR=1.60e-02  Loss=10.373  Speed=4.29e+05s/sec
+04:25:46 Epoch=010.30  GS=2.24e+07  LR=1.60e-02  Loss=10.370  Speed=4.30e+05s/sec
+04:27:53 Epoch=010.40  GS=2.26e+07  LR=1.60e-02  Loss=10.317  Speed=4.30e+05s/sec
+04:30:00 Epoch=010.50  GS=2.28e+07  LR=1.60e-02  Loss=10.279  Speed=4.30e+05s/sec
+04:32:07 Epoch=010.60  GS=2.30e+07  LR=1.60e-02  Loss=10.333  Speed=4.30e+05s/sec
+04:34:14 Epoch=010.70  GS=2.32e+07  LR=1.60e-02  Loss=10.264  Speed=4.30e+05s/sec
+04:36:21 Epoch=010.80  GS=2.35e+07  LR=1.60e-02  Loss=10.253  Speed=4.30e+05s/sec
+04:38:29 Epoch=010.90  GS=2.37e+07  LR=1.60e-02  Loss=10.235  Speed=4.30e+05s/sec
+04:40:36 Epoch=011.00  GS=2.39e+07  LR=1.60e-02  Loss=10.241  Speed=4.30e+05s/sec
+Word Analogies -- Top 1: 60.9%    Top 1+2: 70.0%
+04:43:04 Epoch=011.10  GS=2.41e+07  LR=1.60e-02  Loss=10.312  Speed=4.29e+05s/sec
+04:45:12 Epoch=011.20  GS=2.43e+07  LR=1.60e-02  Loss=10.320  Speed=4.30e+05s/sec
+04:47:19 Epoch=011.30  GS=2.45e+07  LR=1.60e-02  Loss=10.319  Speed=4.30e+05s/sec
+04:49:26 Epoch=011.40  GS=2.48e+07  LR=1.60e-02  Loss=10.275  Speed=4.30e+05s/sec
+04:51:33 Epoch=011.50  GS=2.50e+07  LR=1.60e-02  Loss=10.239  Speed=4.30e+05s/sec
+04:53:40 Epoch=011.60  GS=2.52e+07  LR=1.60e-02  Loss=10.296  Speed=4.30e+05s/sec
+04:55:50 Epoch=011.70  GS=2.54e+07  LR=1.60e-02  Loss=10.231  Speed=4.30e+05s/sec
+04:58:44 Epoch=011.80  GS=2.56e+07  LR=1.60e-02  Loss=10.224  Speed=4.28e+05s/sec
+05:00:51 Epoch=011.90  GS=2.58e+07  LR=1.60e-02  Loss=10.209  Speed=4.29e+05s/sec
+05:02:59 Epoch=012.00  GS=2.61e+07  LR=1.60e-02  Loss=10.218  Speed=4.29e+05s/sec
+Word Analogies -- Top 1: 61.0%    Top 1+2: 70.1%
+05:05:27 Epoch=012.10  GS=2.63e+07  LR=1.60e-02  Loss=10.267  Speed=4.28e+05s/sec
+05:07:34 Epoch=012.20  GS=2.65e+07  LR=1.60e-02  Loss=10.277  Speed=4.28e+05s/sec
+05:09:41 Epoch=012.30  GS=2.67e+07  LR=1.60e-02  Loss=10.279  Speed=4.28e+05s/sec
+05:11:48 Epoch=012.40  GS=2.69e+07  LR=1.60e-02  Loss=10.237  Speed=4.28e+05s/sec
+05:13:55 Epoch=012.50  GS=2.71e+07  LR=1.60e-02  Loss=10.205  Speed=4.28e+05s/sec
+05:16:02 Epoch=012.60  GS=2.74e+07  LR=1.60e-02  Loss=10.264  Speed=4.29e+05s/sec
+05:18:09 Epoch=012.70  GS=2.76e+07  LR=1.60e-02  Loss=10.201  Speed=4.29e+05s/sec
+05:20:16 Epoch=012.80  GS=2.78e+07  LR=1.60e-02  Loss=10.195  Speed=4.29e+05s/sec
+05:22:23 Epoch=012.90  GS=2.80e+07  LR=1.60e-02  Loss=10.183  Speed=4.29e+05s/sec
+05:24:30 Epoch=013.00  GS=2.82e+07  LR=1.60e-02  Loss=10.194  Speed=4.29e+05s/sec
+Word Analogies -- Top 1: 61.1%    Top 1+2: 70.1%
+05:26:59 Epoch=013.10  GS=2.85e+07  LR=8.00e-03  Loss=10.039  Speed=4.28e+05s/sec
+05:29:06 Epoch=013.20  GS=2.87e+07  LR=8.00e-03  Loss=9.967  Speed=4.28e+05s/sec
+05:31:13 Epoch=013.30  GS=2.89e+07  LR=8.00e-03  Loss=9.905  Speed=4.28e+05s/sec
+05:33:20 Epoch=013.40  GS=2.91e+07  LR=8.00e-03  Loss=9.811  Speed=4.29e+05s/sec
+05:35:27 Epoch=013.50  GS=2.93e+07  LR=8.00e-03  Loss=9.728  Speed=4.29e+05s/sec
+05:37:35 Epoch=013.60  GS=2.95e+07  LR=8.00e-03  Loss=9.730  Speed=4.29e+05s/sec
+05:39:42 Epoch=013.70  GS=2.98e+07  LR=8.00e-03  Loss=9.619  Speed=4.29e+05s/sec
+05:41:49 Epoch=013.80  GS=3.00e+07  LR=8.00e-03  Loss=9.567  Speed=4.29e+05s/sec
+05:43:56 Epoch=013.90  GS=3.02e+07  LR=8.00e-03  Loss=9.502  Speed=4.29e+05s/sec
+05:46:03 Epoch=014.00  GS=3.04e+07  LR=8.00e-03  Loss=9.461  Speed=4.29e+05s/sec
+Word Analogies -- Top 1: 62.3%    Top 1+2: 71.1%
+05:48:28 Epoch=014.10  GS=3.06e+07  LR=8.00e-03  Loss=9.818  Speed=4.29e+05s/sec
+05:50:35 Epoch=014.20  GS=3.08e+07  LR=8.00e-03  Loss=9.803  Speed=4.29e+05s/sec
+05:52:43 Epoch=014.30  GS=3.11e+07  LR=8.00e-03  Loss=9.780  Speed=4.29e+05s/sec
+05:54:50 Epoch=014.40  GS=3.13e+07  LR=8.00e-03  Loss=9.721  Speed=4.29e+05s/sec
+05:56:57 Epoch=014.50  GS=3.15e+07  LR=8.00e-03  Loss=9.670  Speed=4.29e+05s/sec
+05:59:04 Epoch=014.60  GS=3.17e+07  LR=8.00e-03  Loss=9.699  Speed=4.29e+05s/sec
+06:01:13 Epoch=014.70  GS=3.19e+07  LR=8.00e-03  Loss=9.614  Speed=4.29e+05s/sec
+06:03:25 Epoch=014.80  GS=3.21e+07  LR=8.00e-03  Loss=9.592  Speed=4.29e+05s/sec
+06:05:51 Epoch=014.90  GS=3.24e+07  LR=8.00e-03  Loss=9.555  Speed=4.28e+05s/sec
+06:08:26 Epoch=015.00  GS=3.26e+07  LR=8.00e-03  Loss=9.543  Speed=4.28e+05s/sec
+Word Analogies -- Top 1: 62.4%    Top 1+2: 71.3%
+06:11:30 Epoch=015.10  GS=3.28e+07  LR=8.00e-03  Loss=9.750  Speed=4.27e+05s/sec
+06:13:50 Epoch=015.20  GS=3.30e+07  LR=8.00e-03  Loss=9.745  Speed=4.26e+05s/sec
+06:16:06 Epoch=015.30  GS=3.32e+07  LR=8.00e-03  Loss=9.732  Speed=4.26e+05s/sec
+06:18:22 Epoch=015.40  GS=3.34e+07  LR=8.00e-03  Loss=9.685  Speed=4.26e+05s/sec
+06:20:42 Epoch=015.50  GS=3.37e+07  LR=8.00e-03  Loss=9.644  Speed=4.26e+05s/sec
+06:22:57 Epoch=015.60  GS=3.39e+07  LR=8.00e-03  Loss=9.683  Speed=4.26e+05s/sec
+06:25:22 Epoch=015.70  GS=3.41e+07  LR=8.00e-03  Loss=9.606  Speed=4.26e+05s/sec
+06:27:37 Epoch=015.80  GS=3.43e+07  LR=8.00e-03  Loss=9.596  Speed=4.26e+05s/sec
+06:29:53 Epoch=015.90  GS=3.45e+07  LR=8.00e-03  Loss=9.570  Speed=4.25e+05s/sec
+06:32:08 Epoch=016.00  GS=3.48e+07  LR=8.00e-03  Loss=9.568  Speed=4.25e+05s/sec
+Word Analogies -- Top 1: 62.5%    Top 1+2: 71.4%
+06:34:37 Epoch=016.10  GS=3.50e+07  LR=8.00e-03  Loss=9.710  Speed=4.25e+05s/sec
+06:36:44 Epoch=016.20  GS=3.52e+07  LR=8.00e-03  Loss=9.711  Speed=4.25e+05s/sec
+06:38:51 Epoch=016.30  GS=3.54e+07  LR=8.00e-03  Loss=9.703  Speed=4.25e+05s/sec
+06:40:58 Epoch=016.40  GS=3.56e+07  LR=8.00e-03  Loss=9.662  Speed=4.25e+05s/sec
+06:43:05 Epoch=016.50  GS=3.58e+07  LR=8.00e-03  Loss=9.624  Speed=4.25e+05s/sec
+06:45:12 Epoch=016.60  GS=3.61e+07  LR=8.00e-03  Loss=9.670  Speed=4.25e+05s/sec
+06:47:19 Epoch=016.70  GS=3.63e+07  LR=8.00e-03  Loss=9.597  Speed=4.25e+05s/sec
+06:49:26 Epoch=016.80  GS=3.65e+07  LR=8.00e-03  Loss=9.593  Speed=4.25e+05s/sec
+06:51:33 Epoch=016.90  GS=3.67e+07  LR=8.00e-03  Loss=9.571  Speed=4.26e+05s/sec
+06:53:40 Epoch=017.00  GS=3.69e+07  LR=8.00e-03  Loss=9.576  Speed=4.26e+05s/sec
+Word Analogies -- Top 1: 62.6%    Top 1+2: 71.4%
+06:56:03 Epoch=017.10  GS=3.71e+07  LR=8.00e-03  Loss=9.681  Speed=4.25e+05s/sec
+06:58:12 Epoch=017.20  GS=3.74e+07  LR=8.00e-03  Loss=9.686  Speed=4.25e+05s/sec
+07:00:20 Epoch=017.30  GS=3.76e+07  LR=8.00e-03  Loss=9.682  Speed=4.25e+05s/sec
+07:02:28 Epoch=017.40  GS=3.78e+07  LR=8.00e-03  Loss=9.643  Speed=4.26e+05s/sec
+07:04:35 Epoch=017.50  GS=3.80e+07  LR=8.00e-03  Loss=9.609  Speed=4.26e+05s/sec
+07:06:43 Epoch=017.60  GS=3.82e+07  LR=8.00e-03  Loss=9.657  Speed=4.26e+05s/sec
+07:08:50 Epoch=017.70  GS=3.84e+07  LR=8.00e-03  Loss=9.589  Speed=4.26e+05s/sec
+07:10:57 Epoch=017.80  GS=3.87e+07  LR=8.00e-03  Loss=9.587  Speed=4.26e+05s/sec
+07:13:04 Epoch=017.90  GS=3.89e+07  LR=8.00e-03  Loss=9.569  Speed=4.26e+05s/sec
+07:15:11 Epoch=018.00  GS=3.91e+07  LR=8.00e-03  Loss=9.576  Speed=4.26e+05s/sec
+Word Analogies -- Top 1: 62.7%    Top 1+2: 71.5%
+07:17:34 Epoch=018.10  GS=3.93e+07  LR=8.00e-03  Loss=9.659  Speed=4.26e+05s/sec
+07:19:41 Epoch=018.20  GS=3.95e+07  LR=8.00e-03  Loss=9.665  Speed=4.26e+05s/sec
+07:21:48 Epoch=018.30  GS=3.97e+07  LR=8.00e-03  Loss=9.664  Speed=4.26e+05s/sec
+07:23:55 Epoch=018.40  GS=4.00e+07  LR=8.00e-03  Loss=9.627  Speed=4.26e+05s/sec
+07:26:02 Epoch=018.50  GS=4.02e+07  LR=8.00e-03  Loss=9.596  Speed=4.26e+05s/sec
+07:28:09 Epoch=018.60  GS=4.04e+07  LR=8.00e-03  Loss=9.645  Speed=4.26e+05s/sec
+07:30:16 Epoch=018.70  GS=4.06e+07  LR=8.00e-03  Loss=9.579  Speed=4.26e+05s/sec
+07:32:23 Epoch=018.80  GS=4.08e+07  LR=8.00e-03  Loss=9.579  Speed=4.26e+05s/sec
+07:34:30 Epoch=018.90  GS=4.10e+07  LR=8.00e-03  Loss=9.563  Speed=4.26e+05s/sec
+07:36:37 Epoch=019.00  GS=4.13e+07  LR=8.00e-03  Loss=9.572  Speed=4.26e+05s/sec
+Word Analogies -- Top 1: 62.7%    Top 1+2: 71.5%
+07:39:00 Epoch=019.10  GS=4.15e+07  LR=4.00e-03  Loss=9.571  Speed=4.26e+05s/sec
+07:41:07 Epoch=019.20  GS=4.17e+07  LR=4.00e-03  Loss=9.535  Speed=4.26e+05s/sec
+07:43:15 Epoch=019.30  GS=4.19e+07  LR=4.00e-03  Loss=9.497  Speed=4.26e+05s/sec
+07:45:22 Epoch=019.40  GS=4.21e+07  LR=4.00e-03  Loss=9.430  Speed=4.26e+05s/sec
+07:47:29 Epoch=019.50  GS=4.24e+07  LR=4.00e-03  Loss=9.366  Speed=4.26e+05s/sec
+07:49:36 Epoch=019.60  GS=4.26e+07  LR=4.00e-03  Loss=9.381  Speed=4.26e+05s/sec
+07:51:43 Epoch=019.70  GS=4.28e+07  LR=4.00e-03  Loss=9.286  Speed=4.26e+05s/sec
+07:53:50 Epoch=019.80  GS=4.30e+07  LR=4.00e-03  Loss=9.255  Speed=4.26e+05s/sec
+07:55:57 Epoch=019.90  GS=4.32e+07  LR=4.00e-03  Loss=9.205  Speed=4.26e+05s/sec
+07:58:04 Epoch=020.00  GS=4.34e+07  LR=4.00e-03  Loss=9.181  Speed=4.27e+05s/sec
+Word Analogies -- Top 1: 63.0%    Top 1+2: 72.0%
+08:00:32 Epoch=020.10  GS=4.37e+07  LR=4.00e-03  Loss=9.471  Speed=4.26e+05s/sec
+08:02:40 Epoch=020.20  GS=4.39e+07  LR=4.00e-03  Loss=9.459  Speed=4.26e+05s/sec
+08:04:47 Epoch=020.30  GS=4.41e+07  LR=4.00e-03  Loss=9.439  Speed=4.26e+05s/sec
+08:06:54 Epoch=020.40  GS=4.43e+07  LR=4.00e-03  Loss=9.389  Speed=4.26e+05s/sec
+08:09:01 Epoch=020.50  GS=4.45e+07  LR=4.00e-03  Loss=9.342  Speed=4.26e+05s/sec
+08:11:08 Epoch=020.60  GS=4.47e+07  LR=4.00e-03  Loss=9.371  Speed=4.26e+05s/sec
+08:13:15 Epoch=020.70  GS=4.50e+07  LR=4.00e-03  Loss=9.290  Speed=4.27e+05s/sec
+08:15:23 Epoch=020.80  GS=4.52e+07  LR=4.00e-03  Loss=9.274  Speed=4.27e+05s/sec
+08:17:30 Epoch=020.90  GS=4.54e+07  LR=4.00e-03  Loss=9.237  Speed=4.27e+05s/sec
+08:19:37 Epoch=021.00  GS=4.56e+07  LR=4.00e-03  Loss=9.228  Speed=4.27e+05s/sec
+Word Analogies -- Top 1: 63.0%    Top 1+2: 72.1%
+08:22:05 Epoch=021.10  GS=4.58e+07  LR=4.00e-03  Loss=9.432  Speed=4.26e+05s/sec
+08:24:12 Epoch=021.20  GS=4.60e+07  LR=4.00e-03  Loss=9.427  Speed=4.26e+05s/sec
+08:26:19 Epoch=021.30  GS=4.63e+07  LR=4.00e-03  Loss=9.413  Speed=4.27e+05s/sec
+08:28:26 Epoch=021.40  GS=4.65e+07  LR=4.00e-03  Loss=9.371  Speed=4.27e+05s/sec
+08:30:33 Epoch=021.50  GS=4.67e+07  LR=4.00e-03  Loss=9.330  Speed=4.27e+05s/sec
+08:32:40 Epoch=021.60  GS=4.69e+07  LR=4.00e-03  Loss=9.365  Speed=4.27e+05s/sec
+08:34:48 Epoch=021.70  GS=4.71e+07  LR=4.00e-03  Loss=9.291  Speed=4.27e+05s/sec
+08:36:55 Epoch=021.80  GS=4.73e+07  LR=4.00e-03  Loss=9.281  Speed=4.27e+05s/sec
+08:39:02 Epoch=021.90  GS=4.76e+07  LR=4.00e-03  Loss=9.251  Speed=4.27e+05s/sec
+08:41:09 Epoch=022.00  GS=4.78e+07  LR=4.00e-03  Loss=9.250  Speed=4.27e+05s/sec
+Word Analogies -- Top 1: 63.1%    Top 1+2: 72.1%
+08:43:37 Epoch=022.10  GS=4.80e+07  LR=4.00e-03  Loss=9.406  Speed=4.27e+05s/sec
+08:45:44 Epoch=022.20  GS=4.82e+07  LR=4.00e-03  Loss=9.405  Speed=4.27e+05s/sec
+08:47:52 Epoch=022.30  GS=4.84e+07  LR=4.00e-03  Loss=9.397  Speed=4.27e+05s/sec
+08:49:59 Epoch=022.40  GS=4.87e+07  LR=4.00e-03  Loss=9.358  Speed=4.27e+05s/sec
+08:52:06 Epoch=022.50  GS=4.89e+07  LR=4.00e-03  Loss=9.321  Speed=4.27e+05s/sec
+08:54:13 Epoch=022.60  GS=4.91e+07  LR=4.00e-03  Loss=9.360  Speed=4.27e+05s/sec
+08:56:20 Epoch=022.70  GS=4.93e+07  LR=4.00e-03  Loss=9.289  Speed=4.27e+05s/sec
+08:58:27 Epoch=022.80  GS=4.95e+07  LR=4.00e-03  Loss=9.284  Speed=4.27e+05s/sec
+09:00:35 Epoch=022.90  GS=4.97e+07  LR=4.00e-03  Loss=9.257  Speed=4.27e+05s/sec
+09:02:42 Epoch=023.00  GS=5.00e+07  LR=4.00e-03  Loss=9.259  Speed=4.27e+05s/sec
+Word Analogies -- Top 1: 63.0%    Top 1+2: 72.1%
+09:05:05 Epoch=023.10  GS=5.02e+07  LR=4.00e-03  Loss=9.389  Speed=4.27e+05s/sec
+09:07:12 Epoch=023.20  GS=5.04e+07  LR=4.00e-03  Loss=9.389  Speed=4.27e+05s/sec
+09:09:19 Epoch=023.30  GS=5.06e+07  LR=4.00e-03  Loss=9.384  Speed=4.27e+05s/sec
+09:11:26 Epoch=023.40  GS=5.08e+07  LR=4.00e-03  Loss=9.348  Speed=4.27e+05s/sec
+09:13:34 Epoch=023.50  GS=5.10e+07  LR=4.00e-03  Loss=9.313  Speed=4.27e+05s/sec
+09:15:45 Epoch=023.60  GS=5.13e+07  LR=4.00e-03  Loss=9.355  Speed=4.27e+05s/sec
+09:18:03 Epoch=023.70  GS=5.15e+07  LR=4.00e-03  Loss=9.287  Speed=4.27e+05s/sec
+09:20:31 Epoch=023.80  GS=5.17e+07  LR=4.00e-03  Loss=9.284  Speed=4.27e+05s/sec
+09:22:55 Epoch=023.90  GS=5.19e+07  LR=4.00e-03  Loss=9.260  Speed=4.26e+05s/sec
+09:25:05 Epoch=024.00  GS=5.21e+07  LR=4.00e-03  Loss=9.265  Speed=4.26e+05s/sec
+Word Analogies -- Top 1: 63.1%    Top 1+2: 72.2%
+09:27:32 Epoch=024.10  GS=5.23e+07  LR=4.00e-03  Loss=9.375  Speed=4.26e+05s/sec
+09:29:41 Epoch=024.20  GS=5.26e+07  LR=4.00e-03  Loss=9.377  Speed=4.26e+05s/sec
+09:31:52 Epoch=024.30  GS=5.28e+07  LR=4.00e-03  Loss=9.372  Speed=4.26e+05s/sec
+09:34:05 Epoch=024.40  GS=5.30e+07  LR=4.00e-03  Loss=9.340  Speed=4.26e+05s/sec
+09:36:22 Epoch=024.50  GS=5.32e+07  LR=4.00e-03  Loss=9.306  Speed=4.26e+05s/sec
+09:38:43 Epoch=024.60  GS=5.34e+07  LR=4.00e-03  Loss=9.350  Speed=4.26e+05s/sec
+09:40:56 Epoch=024.70  GS=5.36e+07  LR=4.00e-03  Loss=9.284  Speed=4.26e+05s/sec
+09:43:09 Epoch=024.80  GS=5.39e+07  LR=4.00e-03  Loss=9.283  Speed=4.26e+05s/sec
+09:45:24 Epoch=024.90  GS=5.41e+07  LR=4.00e-03  Loss=9.260  Speed=4.26e+05s/sec
+09:47:45 Epoch=025.00  GS=5.43e+07  LR=4.00e-03  Loss=9.267  Speed=4.26e+05s/sec
+Word Analogies -- Top 1: 63.1%    Top 1+2: 72.2%
+09:50:22 Epoch=025.10  GS=5.45e+07  LR=2.00e-03  Loss=9.337  Speed=4.25e+05s/sec
+09:52:36 Epoch=025.20  GS=5.47e+07  LR=2.00e-03  Loss=9.317  Speed=4.25e+05s/sec
+09:54:46 Epoch=025.30  GS=5.49e+07  LR=2.00e-03  Loss=9.293  Speed=4.25e+05s/sec
+09:56:58 Epoch=025.40  GS=5.52e+07  LR=2.00e-03  Loss=9.243  Speed=4.25e+05s/sec
+09:59:06 Epoch=025.50  GS=5.54e+07  LR=2.00e-03  Loss=9.188  Speed=4.25e+05s/sec
+10:01:13 Epoch=025.60  GS=5.56e+07  LR=2.00e-03  Loss=9.212  Speed=4.25e+05s/sec
+10:03:21 Epoch=025.70  GS=5.58e+07  LR=2.00e-03  Loss=9.128  Speed=4.25e+05s/sec
+10:05:34 Epoch=025.80  GS=5.60e+07  LR=2.00e-03  Loss=9.109  Speed=4.25e+05s/sec
+10:07:42 Epoch=025.90  GS=5.63e+07  LR=2.00e-03  Loss=9.066  Speed=4.25e+05s/sec
+10:09:50 Epoch=026.00  GS=5.65e+07  LR=2.00e-03  Loss=9.055  Speed=4.25e+05s/sec
+Word Analogies -- Top 1: 63.3%    Top 1+2: 72.4%
+10:12:20 Epoch=026.10  GS=5.67e+07  LR=2.00e-03  Loss=9.292  Speed=4.25e+05s/sec
+10:14:29 Epoch=026.20  GS=5.69e+07  LR=2.00e-03  Loss=9.282  Speed=4.25e+05s/sec
+10:16:38 Epoch=026.30  GS=5.71e+07  LR=2.00e-03  Loss=9.266  Speed=4.25e+05s/sec
+10:18:47 Epoch=026.40  GS=5.73e+07  LR=2.00e-03  Loss=9.223  Speed=4.25e+05s/sec
+10:20:54 Epoch=026.50  GS=5.76e+07  LR=2.00e-03  Loss=9.178  Speed=4.25e+05s/sec
+10:23:03 Epoch=026.60  GS=5.78e+07  LR=2.00e-03  Loss=9.208  Speed=4.25e+05s/sec
+10:25:12 Epoch=026.70  GS=5.80e+07  LR=2.00e-03  Loss=9.132  Speed=4.25e+05s/sec
+10:27:21 Epoch=026.80  GS=5.82e+07  LR=2.00e-03  Loss=9.119  Speed=4.25e+05s/sec
+10:29:30 Epoch=026.90  GS=5.84e+07  LR=2.00e-03  Loss=9.084  Speed=4.25e+05s/sec
+10:31:38 Epoch=027.00  GS=5.86e+07  LR=2.00e-03  Loss=9.079  Speed=4.25e+05s/sec
+Word Analogies -- Top 1: 63.3%    Top 1+2: 72.5%
+10:34:08 Epoch=027.10  GS=5.89e+07  LR=2.00e-03  Loss=9.269  Speed=4.25e+05s/sec
+10:36:19 Epoch=027.20  GS=5.91e+07  LR=2.00e-03  Loss=9.264  Speed=4.25e+05s/sec
+10:38:29 Epoch=027.30  GS=5.93e+07  LR=2.00e-03  Loss=9.252  Speed=4.25e+05s/sec
+10:40:39 Epoch=027.40  GS=5.95e+07  LR=2.00e-03  Loss=9.214  Speed=4.25e+05s/sec
+10:42:51 Epoch=027.50  GS=5.97e+07  LR=2.00e-03  Loss=9.172  Speed=4.25e+05s/sec
+10:45:03 Epoch=027.60  GS=5.99e+07  LR=2.00e-03  Loss=9.207  Speed=4.25e+05s/sec
+10:47:14 Epoch=027.70  GS=6.02e+07  LR=2.00e-03  Loss=9.133  Speed=4.25e+05s/sec
+10:49:23 Epoch=027.80  GS=6.04e+07  LR=2.00e-03  Loss=9.125  Speed=4.25e+05s/sec
+10:51:34 Epoch=027.90  GS=6.06e+07  LR=2.00e-03  Loss=9.093  Speed=4.25e+05s/sec
+10:53:41 Epoch=028.00  GS=6.08e+07  LR=2.00e-03  Loss=9.093  Speed=4.25e+05s/sec
+Word Analogies -- Top 1: 63.4%    Top 1+2: 72.5%
+10:56:11 Epoch=028.10  GS=6.10e+07  LR=2.00e-03  Loss=9.255  Speed=4.25e+05s/sec
+10:58:26 Epoch=028.20  GS=6.12e+07  LR=2.00e-03  Loss=9.251  Speed=4.25e+05s/sec
+11:00:37 Epoch=028.30  GS=6.15e+07  LR=2.00e-03  Loss=9.241  Speed=4.25e+05s/sec
+11:02:44 Epoch=028.40  GS=6.17e+07  LR=2.00e-03  Loss=9.208  Speed=4.25e+05s/sec
+11:04:51 Epoch=028.50  GS=6.19e+07  LR=2.00e-03  Loss=9.168  Speed=4.25e+05s/sec
+11:06:58 Epoch=028.60  GS=6.21e+07  LR=2.00e-03  Loss=9.205  Speed=4.25e+05s/sec
+11:09:05 Epoch=028.70  GS=6.23e+07  LR=2.00e-03  Loss=9.133  Speed=4.25e+05s/sec
+11:11:12 Epoch=028.80  GS=6.26e+07  LR=2.00e-03  Loss=9.128  Speed=4.25e+05s/sec
+11:13:22 Epoch=028.90  GS=6.28e+07  LR=2.00e-03  Loss=9.097  Speed=4.25e+05s/sec
+11:15:33 Epoch=029.00  GS=6.30e+07  LR=2.00e-03  Loss=9.101  Speed=4.25e+05s/sec
+Word Analogies -- Top 1: 63.4%    Top 1+2: 72.5%
+11:18:00 Epoch=029.10  GS=6.32e+07  LR=2.00e-03  Loss=9.244  Speed=4.25e+05s/sec
+11:20:13 Epoch=029.20  GS=6.34e+07  LR=2.00e-03  Loss=9.242  Speed=4.25e+05s/sec
+11:22:25 Epoch=029.30  GS=6.36e+07  LR=2.00e-03  Loss=9.234  Speed=4.25e+05s/sec
+11:24:39 Epoch=029.40  GS=6.39e+07  LR=2.00e-03  Loss=9.202  Speed=4.25e+05s/sec
+11:26:51 Epoch=029.50  GS=6.41e+07  LR=2.00e-03  Loss=9.163  Speed=4.25e+05s/sec
+11:29:04 Epoch=029.60  GS=6.43e+07  LR=2.00e-03  Loss=9.203  Speed=4.25e+05s/sec
+11:31:15 Epoch=029.70  GS=6.45e+07  LR=2.00e-03  Loss=9.133  Speed=4.25e+05s/sec
+11:33:26 Epoch=029.80  GS=6.47e+07  LR=2.00e-03  Loss=9.130  Speed=4.25e+05s/sec
+11:35:39 Epoch=029.90  GS=6.49e+07  LR=2.00e-03  Loss=9.101  Speed=4.25e+05s/sec
+11:37:57 Epoch=030.00  GS=6.52e+07  LR=2.00e-03  Loss=9.107  Speed=4.25e+05s/sec
+Word Analogies -- Top 1: 63.4%    Top 1+2: 72.5%

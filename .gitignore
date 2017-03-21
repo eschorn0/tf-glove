@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local data
+data/
+.idea/
+word-test.v1.txt
+
+# Cython intermediates
+build/
+*.c
+*.so
